@@ -8,9 +8,8 @@ import 'package:triazine/presentation/screens/search_screen.dart';
 import 'package:triazine/presentation/screens/splash_screen.dart';
 
 void main() {
-  SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
-  statusBarColor: Colors.transparent
-));
+  SystemChrome.setSystemUIOverlayStyle(
+      SystemUiOverlayStyle(statusBarColor: Colors.transparent));
   runApp(MyApp());
 }
 
@@ -20,7 +19,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: InfoScreen(),
+      home: HomeScreen(),
     );
   }
 }

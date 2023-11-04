@@ -3,6 +3,8 @@ import 'package:introduction_screen/introduction_screen.dart';
 import 'package:triazine/constants.dart';
 import 'package:triazine/presentation/widgets/buttons/curved_border_button.dart';
 
+import '../../lists.dart';
+
 class InfoScreen extends StatefulWidget {
   const InfoScreen({super.key});
 

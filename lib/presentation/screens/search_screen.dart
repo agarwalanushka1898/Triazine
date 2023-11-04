@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:triazine/constants.dart';
 import 'package:triazine/data/models/search_section_model.dart';
 
+import '../../lists.dart';
+
 class SearchScreen extends StatelessWidget {
   const SearchScreen({super.key});
 

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:intl_phone_field/intl_phone_field.dart';
+import 'package:triazine/presentation/screens/otp_screen.dart';
 import 'package:triazine/presentation/widgets/buttons/curved_border_button.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -9,6 +11,7 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+  bool val = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -36,22 +39,49 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                 ),
                 const SizedBox(height: 50),
-                const TextField(),
-                const SizedBox(height: 20),
-                RadioListTile(
-                  value: true,
-                  groupValue: true,
-                  onChanged: (v) {},
-                  title: const Text(
-                    "I have read and agree to the terms of use of NPAY",
-                    style: TextStyle(color: Colors.grey),
+                IntlPhoneField(
+                  decoration: const InputDecoration(
+                    labelText: 'Phone Number',
+                    border: OutlineInputBorder(
+                      borderSide: BorderSide(),
+                    ),
                   ),
-                  // subtitle: Text("clskjlkj"),
+                  initialCountryCode: 'IN',
+                  onChanged: (phone) {
+                    print(phone.completeNumber);
+                  },
                 ),
                 const SizedBox(height: 20),
-                const Row(
+                Row(
+                  children: [
+                    Checkbox(
+                        value: val,
+                        onChanged: (v) {
+                          setState(() {
+                            val = !val;
+                          });
+                        }),
+                    const Expanded(
+                        child: Text(
+                      "I have read and agree to the terms of use of NPAY",
+                      style: TextStyle(color: Colors.grey, fontSize: 15),
+                    ))
+                  ],
+                ),
+                const SizedBox(height: 20),
+                Row(
                   mainAxisAlignment: MainAxisAlignment.end,
-                  children: [CurvedBorderButton(child: "NEXT")],
+                  children: [
+                    CurvedBorderButton(
+                      child: "NEXT",
+                      ontap: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (_) => const OtpScreen()));
+                      },
+                    )
+                  ],
                 )
               ],
             ),

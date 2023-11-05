@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:otp_text_field/otp_field.dart';
 import 'package:otp_text_field/style.dart';
+import 'package:triazine/presentation/screens/home_screen.dart';
 import 'package:triazine/presentation/widgets/buttons/curved_border_button.dart';
 
 class OtpScreen extends StatefulWidget {
@@ -13,7 +14,7 @@ class OtpScreen extends StatefulWidget {
 }
 
 class _OtpScreenState extends State<OtpScreen> {
-  int count = 3;
+  int count = 60;
   late Timer _timer;
 
   @override
@@ -23,7 +24,8 @@ class _OtpScreenState extends State<OtpScreen> {
   }
 
   _startTimer() {
-    _timer = Timer.periodic(Duration(seconds: 1), (timer) {
+    count = 60;
+    _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
       if (count == 0) {
         _timer.cancel();
         return;
@@ -72,23 +74,37 @@ class _OtpScreenState extends State<OtpScreen> {
                   width: MediaQuery.of(context).size.width,
                   fieldWidth: 50,
                   // spaceBetween: 10,
-                  style: TextStyle(fontSize: 17),
+                  style: const TextStyle(fontSize: 17),
                   textFieldAlignment: MainAxisAlignment.spaceAround,
                   fieldStyle: FieldStyle.box,
                   onCompleted: (pin) {
-                    print("Completed: " + pin);
+                    print("Completed: $pin");
                   },
                 ),
                 const SizedBox(height: 20),
-                const Row(
+                Row(
                   mainAxisAlignment: MainAxisAlignment.end,
-                  children: [CurvedBorderButton(child: "NEXT")],
+                  children: [
+                    CurvedBorderButton(
+                        child: "NEXT",
+                        ontap: () {
+                          Navigator.pop(context);
+                          Navigator.pushReplacement(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (_) => const HomeScreen()));
+                        })
+                  ],
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     TextButton(
-                        onPressed: () {},
+                        onPressed: count > 0
+                            ? null
+                            : () {
+                                _startTimer();
+                              },
                         child: Text(
                           "Send code again",
                           style: TextStyle(
@@ -99,7 +115,7 @@ class _OtpScreenState extends State<OtpScreen> {
                     if (count > 0)
                       Text(
                         "($count)",
-                        style: TextStyle(color: Colors.blue),
+                        style: const TextStyle(color: Colors.blue),
                       )
                   ],
                 ),
@@ -107,7 +123,7 @@ class _OtpScreenState extends State<OtpScreen> {
                     onPressed: () {
                       Navigator.pop(context);
                     },
-                    child: Text(
+                    child: const Text(
                       "Change phone number",
                       style: TextStyle(decoration: TextDecoration.underline),
                     )),

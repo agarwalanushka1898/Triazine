@@ -25,6 +25,21 @@ List<SearchSectionLabel> searchSectionList = [
       color: Colors.redAccent),
 ];
 
+List<SearchSectionLabel> bottomHomeList = [
+  SearchSectionLabel(
+      iconData: Icons.electric_bolt_rounded,
+      label: "Electricity Payment",
+      color: Colors.blue),
+  SearchSectionLabel(
+      iconData: Icons.water_drop_rounded,
+      label: "Water Payment",
+      color: Colors.blue),
+  SearchSectionLabel(
+      iconData: Icons.airplanemode_active_rounded,
+      label: "Air fare",
+      color: Colors.redAccent),
+];
+
 List<String> introImageList = [
   "assets/deposit.png",
   "assets/quick_transfer.png",

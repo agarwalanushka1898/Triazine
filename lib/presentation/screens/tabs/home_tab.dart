@@ -1,9 +1,11 @@
 import 'dart:developer';
 
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:triazine/data/models/search_section_model.dart';
 import 'package:triazine/lists.dart';
+import 'package:triazine/presentation/screens/search_screen.dart';
 
 import '../../../constants.dart';
 import '../../widgets/delegates/custom_sliver_delegate.dart';
@@ -65,27 +67,36 @@ class _HomeTabState extends State<HomeTab> {
                   padding: const EdgeInsets.only(bottom: 10),
                   width: double.infinity,
                   height: 100,
-                  child: const Row(
+                  child: Row(
                     children: [
                       Expanded(
-                        child: TextField(
-                          cursorColor: Colors.grey,
-                          decoration: InputDecoration(
-                              hintText: "Search",
-                              hintStyle: TextStyle(color: Colors.grey),
-                              border: InputBorder.none,
-                              prefixIcon: Icon(
-                                Icons.search,
-                                color: Colors.white,
-                              )),
+                        child: InkWell(
+                          onTap: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (_) => const SearchScreen()));
+                          },
+                          child: const TextField(
+                            cursorColor: Colors.grey,
+                            enabled: false,
+                            decoration: InputDecoration(
+                                hintText: "Search",
+                                hintStyle: TextStyle(color: Colors.grey),
+                                border: InputBorder.none,
+                                prefixIcon: Icon(
+                                  Icons.search,
+                                  color: Colors.white,
+                                )),
+                          ),
                         ),
                       ),
-                      Icon(
+                      const Icon(
                         Icons.notifications,
                         color: Colors.white,
                       ),
-                      SizedBox(width: 10),
-                      Icon(
+                      const SizedBox(width: 10),
+                      const Icon(
                         Icons.power_settings_new,
                         color: Colors.white,
                       )
@@ -93,60 +104,125 @@ class _HomeTabState extends State<HomeTab> {
                   ),
                 ),
                 Expanded(
-                  child: CustomScrollView(
-                    controller: _scrollController,
-                    slivers: [
-                      const SliverPersistentHeader(
-                          delegate:
-                              CustomSliverAppBarDelegate(expandedHeight: 150),
-                          pinned: true),
-                      SliverToBoxAdapter(
-                        child: GridView.builder(
-                            itemCount: searchSectionList.length,
-                            shrinkWrap: true,
-                            physics: const NeverScrollableScrollPhysics(),
-                            gridDelegate:
-                                const SliverGridDelegateWithFixedCrossAxisCount(
-                              crossAxisCount: 3,
-                              mainAxisSpacing: 15,
-                              crossAxisSpacing: 15,
-                            ),
-                            itemBuilder: (context, index) {
-                              SearchSectionLabel item =
-                                  searchSectionList[index];
-                              return Container(
-                                decoration: BoxDecoration(
+                  child: ClipRRect(
+                    clipBehavior: Clip.hardEdge,
+                    borderRadius: const BorderRadius.only(
+                        topLeft: Radius.circular(20),
+                        topRight: Radius.circular(20)),
+                    child: CustomScrollView(
+                      controller: _scrollController,
+                      slivers: [
+                        const SliverPersistentHeader(
+                            delegate:
+                                CustomSliverAppBarDelegate(expandedHeight: 150),
+                            pinned: true),
+                        SliverToBoxAdapter(
+                          child: GridView.builder(
+                              itemCount: searchSectionList.length,
+                              shrinkWrap: true,
+                              physics: const NeverScrollableScrollPhysics(),
+                              gridDelegate:
+                                  const SliverGridDelegateWithFixedCrossAxisCount(
+                                crossAxisCount: 3,
+                                mainAxisSpacing: 15,
+                                crossAxisSpacing: 15,
+                              ),
+                              itemBuilder: (context, index) {
+                                SearchSectionLabel item =
+                                    searchSectionList[index];
+                                return Container(
+                                  decoration: BoxDecoration(
                                     color: Colors.white,
                                     borderRadius: BorderRadius.circular(20),
-                                    border: Border.all(color: Colors.black)),
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Icon(
-                                      item.iconData,
-                                      color: item.color,
-                                      size: 40,
-                                    ),
-                                    const SizedBox(height: 15),
-                                    Text(
-                                      item.label,
-                                      textAlign: TextAlign.center,
-                                    ),
-                                  ],
-                                ),
+                                    // border: Border.all(color: Colors.black),
+                                  ),
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Icon(
+                                        item.iconData,
+                                        color: item.color,
+                                        size: 40,
+                                      ),
+                                      const SizedBox(height: 15),
+                                      Text(
+                                        item.label,
+                                        textAlign: TextAlign.center,
+                                      ),
+                                    ],
+                                  ),
+                                );
+                              }),
+                        ),
+
+                        // Carousel Slider
+                        SliverToBoxAdapter(
+                            child: Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 20.0),
+                          child: CarouselSlider(
+                            options: CarouselOptions(
+                              height: 100.0,
+                              disableCenter: false,
+                              pageSnapping: false,
+                              viewportFraction: 0.8,
+                              padEnds: false,
+                              enableInfiniteScroll: false,
+                            ),
+                            items: [
+                              "assets/slider1.png",
+                              "assets/slider2.png",
+                            ].map((i) {
+                              return Builder(
+                                builder: (BuildContext context) {
+                                  return Image.asset(i);
+                                },
                               );
-                            }),
-                      ),
-                      SliverToBoxAdapter(
-                        child: ListView.builder(
-                            shrinkWrap: true,
-                            physics: const NeverScrollableScrollPhysics(),
-                            itemCount: 10,
-                            itemBuilder: (context, index) {
-                              return ListTile(title: Text("index : $index"));
-                            }),
-                      )
-                    ],
+                            }).toList(),
+                          ),
+                        )),
+
+                        SliverToBoxAdapter(
+                          child: GridView.builder(
+                              itemCount: bottomHomeList.length,
+                              shrinkWrap: true,
+                              physics: const NeverScrollableScrollPhysics(),
+                              gridDelegate:
+                                  const SliverGridDelegateWithFixedCrossAxisCount(
+                                crossAxisCount: 3,
+                                mainAxisSpacing: 15,
+                                crossAxisSpacing: 15,
+                              ),
+                              itemBuilder: (context, index) {
+                                SearchSectionLabel item = bottomHomeList[index];
+                                return Container(
+                                  decoration: BoxDecoration(
+                                    color: Colors.white,
+                                    borderRadius: BorderRadius.circular(20),
+                                    // border: Border.all(color: Colors.black),
+                                  ),
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Icon(
+                                        item.iconData,
+                                        color: item.color,
+                                        size: 40,
+                                      ),
+                                      const SizedBox(height: 15),
+                                      Text(
+                                        item.label,
+                                        textAlign: TextAlign.center,
+                                      ),
+                                    ],
+                                  ),
+                                );
+                              }),
+                        ),
+                        const SliverToBoxAdapter(
+                          child: SizedBox(height: 30),
+                        )
+                      ],
+                    ),
                   ),
                 ),
               ],

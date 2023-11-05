@@ -19,7 +19,7 @@ class CustomSliverAppBarDelegate extends SliverPersistentHeaderDelegate {
         decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(20),
-          border: Border.all(color: Colors.black),
+          // border: Border.all(color: Colors.black),
         ),
         padding: const EdgeInsets.all(20),
         child: Column(

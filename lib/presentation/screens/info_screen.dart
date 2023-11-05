@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:introduction_screen/introduction_screen.dart';
 import 'package:triazine/constants.dart';
+import 'package:triazine/presentation/screens/login_screen.dart';
 import 'package:triazine/presentation/widgets/buttons/curved_border_button.dart';
 
 import '../../lists.dart';
@@ -46,7 +47,7 @@ class _InfoScreenState extends State<InfoScreen> {
               dotsDecorator: DotsDecorator(
                   color: themeColor.withOpacity(0.5),
                   activeColor: themeColor,
-                  activeSize: Size(14, 14)),
+                  activeSize: const Size(14, 14)),
               onDone: () {
                 // On button pressed
               },
@@ -58,14 +59,23 @@ class _InfoScreenState extends State<InfoScreen> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 TextButton(
-                    onPressed: () {},
-                    child: Text(
+                    onPressed: () {
+                      Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(
+                              builder: (_) => const LoginScreen()));
+                    },
+                    child: const Text(
                       "REGISTER",
                       style: TextStyle(
                           color: Colors.black, letterSpacing: 2, fontSize: 16),
                     )),
                 CurvedBorderButton(
                   child: "LOGIN",
+                  ontap: () {
+                    Navigator.pushReplacement(context,
+                        MaterialPageRoute(builder: (_) => const LoginScreen()));
+                  },
                 ),
               ],
             ),

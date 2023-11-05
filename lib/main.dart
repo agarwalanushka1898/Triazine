@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:triazine/presentation/screens/home_screen.dart';
-import 'package:triazine/presentation/screens/test_screen.dart';
+import 'package:triazine/presentation/screens/login_screen.dart';
+import 'package:triazine/presentation/screens/otp_screen.dart';
 
 void main() {
   SystemChrome.setSystemUIOverlayStyle(
@@ -15,7 +15,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const MaterialApp(
-      home: HomeScreen(),
+      home: OtpScreen(),
     );
   }
 }
